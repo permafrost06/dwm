@@ -259,6 +259,8 @@ static void togglefloating(const Arg *arg);
 static void togglescratch(const Arg *arg);
 static void togglesticky(const Arg *arg);
 static void togglefullscr(const Arg *arg);
+static void spawntermwithdir();
+static void settagpath();
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -2058,6 +2060,51 @@ togglescratch(const Arg *arg)
 		selmon->tagset[selmon->seltags] |= scratchtag;
 		spawn(&sparg);
 	}
+}
+
+void
+spawntermwithdir()
+{
+    int currentTag;
+    for (currentTag = 0; currentTag < LENGTH(tags); currentTag++) {
+        if (selmon->tagset[selmon->seltags] & (1 << currentTag)) {
+            break;
+        }
+    }
+
+    char buf[256];
+    snprintf(buf, sizeof(buf), "cd %s && exec $SHELL", tagPaths[currentTag]);
+
+    const char *termTmpCmd[]  = { "st", "-e", "sh", "-c", buf, NULL };
+
+	Arg sparg = {.v = termTmpCmd};
+    spawn(&sparg);
+}
+
+void
+settagpath() {
+	char *p, name[238];
+	FILE *f;
+	int i;
+
+	errno = 0; // popen(3p) says on failure it "may" set errno
+	if(!(f = popen("dmenu < ~/.config/tmux/worklist -i -p \"Select dir for this tag:\"", "r"))) {
+		fprintf(stderr, "dwm: popen 'dmenu < /dev/null' failed%s%s\n", errno ? ": " : "", errno ? strerror(errno) : "");
+		return;
+	}
+	if (!(p = fgets(name, 238, f)) && (i = errno) && ferror(f))
+		fprintf(stderr, "dwm: fgets failed: %s\n", strerror(i));
+	if (pclose(f) < 0)
+		fprintf(stderr, "dwm: pclose failed: %s\n", strerror(errno));
+	if(!p)
+		return;
+	if((p = strchr(name, '\n')))
+		*p = '\0';
+
+	for(i = 0; i < LENGTH(tags); i++)
+		if(selmon->tagset[selmon->seltags] & (1 << i))
+			strcpy(tagPaths[i], name);
+	drawbars();
 }
 
 void
