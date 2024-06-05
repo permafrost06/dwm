@@ -913,6 +913,8 @@ drawbar(Monitor *m)
 		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
 	}
 
+    int current_tag;
+
 	for (c = m->clients; c; c = c->next) {
 		occ |= c->tags == 255 ? 0 : c->tags;
 		if (c->isurgent)
@@ -927,6 +929,9 @@ drawbar(Monitor *m)
 
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
+        if (m->tagset[m->seltags] & 1 << i) {
+            current_tag = i;
+        }
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
 		x += w;
 	}
@@ -937,7 +942,9 @@ drawbar(Monitor *m)
 	if ((w = m->ww - tw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+            char name_with_dir[512];
+            snprintf(name_with_dir, 512, "[%s] %s", tagPaths[current_tag], m->sel->name);
+			drw_text(drw, x, 0, w, bh, lrpad / 2, name_with_dir, 0);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
 		} else {
