@@ -921,8 +921,9 @@ drawbar(Monitor *m)
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
 		/* do not draw vacant tags */
-		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
-		continue;
+		if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i)) {
+            continue;
+        }
 
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
