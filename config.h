@@ -215,7 +215,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_r,		    spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
 	{ Mod1Mask,			    XK_space,	    spawn,      {.v = (const char*[]){ "dmenu_run", NULL } } },
 	{ MODKEY,       	    XK_p,	        spawn,		{.v = (const char*[]){ "passmenu", NULL } } },
-	{ MODKEY|,          	XK_n,		    spawn,		{.v = (const char*[]){ "vpn_control", "tailscale" } } },
+	{ MODKEY,             	XK_n,		    spawn,		{.v = (const char*[]){ "vpn_control", "tailscale" } } },
 	{ MODKEY|ControlMask,	XK_n,		    spawn,		{.v = (const char*[]){ "vpn_control", "warp" } } },
 	{ MODKEY|ShiftMask, 	XK_n,		    spawn,		{.v = (const char*[]){ "vpn_control", "off" } } },
 
