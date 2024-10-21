@@ -180,6 +180,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_o,		    incnmaster,         {.i = +1 } },
 	{ MODKEY|ShiftMask,	XK_o,		    incnmaster,         {.i = -1 } },
 	{ MODKEY,		    XK_d,	        settagpath,	        {0} },
+	{ MODKEY|ShiftMask, XK_d,	        settagpathtocwd,    {0} },
 	{ MODKEY,			XK_q,		    killclient,	        {0} },
 	{ MODKEY,          	XK_Return,	    spawntermwithdir,	{0} },
 	{ MODKEY,			XK_apostrophe,	togglescratch,	    {.ui = 1} },

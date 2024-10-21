@@ -263,6 +263,7 @@ static void togglesticky(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void spawntermwithdir();
 static void settagpath();
+static void settagpathtocwd();
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -2124,6 +2125,32 @@ settagpath() {
 	errno = 0; // popen(3p) says on failure it "may" set errno
 	if(!(f = popen("dmenu < ~/.config/tmux/worklist -i -p \"Select dir for this tag:\"", "r"))) {
 		fprintf(stderr, "dwm: popen 'dmenu < /dev/null' failed%s%s\n", errno ? ": " : "", errno ? strerror(errno) : "");
+		return;
+	}
+	if (!(p = fgets(name, 238, f)) && (i = errno) && ferror(f))
+		fprintf(stderr, "dwm: fgets failed: %s\n", strerror(i));
+	if (pclose(f) < 0)
+		fprintf(stderr, "dwm: pclose failed: %s\n", strerror(errno));
+	if(!p)
+		return;
+	if((p = strchr(name, '\n')))
+		*p = '\0';
+
+	for(i = 0; i < LENGTH(tags); i++)
+		if(selmon->tagset[selmon->seltags] & (1 << i))
+			strcpy(tagPaths[i], name);
+	drawbars();
+}
+
+void
+settagpathtocwd() {
+	char *p, name[238];
+	FILE *f;
+	int i;
+
+	errno = 0; // popen(3p) says on failure it "may" set errno
+	if(!(f = popen("getcwd", "r"))) {
+		fprintf(stderr, "dwm: popen 'getcwd' failed%s%s\n", errno ? ": " : "", errno ? strerror(errno) : "");
 		return;
 	}
 	if (!(p = fgets(name, 238, f)) && (i = errno) && ferror(f))
