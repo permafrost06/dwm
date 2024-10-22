@@ -2123,7 +2123,7 @@ settagpath() {
 	int i;
 
 	errno = 0; // popen(3p) says on failure it "may" set errno
-	if(!(f = popen("dmenu < ~/.config/tmux/worklist -i -p \"Select dir for this tag:\"", "r"))) {
+	if(!(f = popen("dirselect", "r"))) {
 		fprintf(stderr, "dwm: popen 'dmenu < /dev/null' failed%s%s\n", errno ? ": " : "", errno ? strerror(errno) : "");
 		return;
 	}
