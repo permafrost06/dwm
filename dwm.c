@@ -955,13 +955,14 @@ drawbar(Monitor *m)
 	w = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+    if (strlen(tagPaths[current_tag]) != 0) {
+        x = drw_text(drw, x, 0, TEXTW(tagPaths[current_tag]), bh, 0, tagPaths[current_tag], 0);
+    }
 
 	if ((w = m->ww - tw - x) > bh) {
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-            char name_with_dir[512];
-            snprintf(name_with_dir, 512, "[%s] %s", tagPaths[current_tag], m->sel->name);
-			drw_text(drw, x, 0, w, bh, lrpad / 2, name_with_dir, 0);
+            drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
 			if (m->sel->isfloating)
 				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
 		} else {
