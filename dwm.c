@@ -262,6 +262,7 @@ static void togglescratch(const Arg *arg);
 static void togglesticky(const Arg *arg);
 static void togglefullscr(const Arg *arg);
 static void spawntermwithdir();
+static void spawneditorwithdir();
 static void settagpath();
 static void settagpathtocwd();
 static void toggletag(const Arg *arg);
@@ -2109,6 +2110,25 @@ spawntermwithdir()
 
     char buf[256];
     snprintf(buf, sizeof(buf), "cd %s && exec $SHELL", tagPaths[currentTag]);
+
+    const char *termTmpCmd[]  = { "st", "-e", "sh", "-c", buf, NULL };
+
+	Arg sparg = {.v = termTmpCmd};
+    spawn(&sparg);
+}
+
+void
+spawneditorwithdir()
+{
+    int currentTag;
+    for (currentTag = 0; currentTag < LENGTH(tags); currentTag++) {
+        if (selmon->tagset[selmon->seltags] & (1 << currentTag)) {
+            break;
+        }
+    }
+
+    char buf[256];
+    snprintf(buf, sizeof(buf), "cd %s && %s .", tagPaths[currentTag], EDITOR);
 
     const char *termTmpCmd[]  = { "st", "-e", "sh", "-c", buf, NULL };
 

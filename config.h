@@ -4,6 +4,7 @@
 #define TERMINAL "st"
 #define TERMCLASS "St"
 #define BROWSER "firefox"
+#define EDITOR "nvim"
 
 /* appearance */
 static unsigned int borderpx  = 5;        /* border pixel of windows */
@@ -183,6 +184,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask, XK_d,	        settagpathtocwd,    {0} },
 	{ MODKEY,			XK_q,		    killclient,	        {0} },
 	{ MODKEY,          	XK_Return,	    spawntermwithdir,	{0} },
+	{ MODKEY,           XK_n,		    spawneditorwithdir,	{0} },
 	{ MODKEY,			XK_apostrophe,	togglescratch,	    {.ui = 1} },
 	{ MODKEY|ShiftMask,	XK_Return,	    togglescratch,	    {.ui = 0} },
 	{ MODKEY,			XK_space,	    zoom,	        	{0} },
