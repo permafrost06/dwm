@@ -101,8 +101,8 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD,	XK_k,	ACTION##stack,	{.i = INC(+1) } }, \
-	{ MOD,	XK_j,	ACTION##stack,	{.i = INC(-1) } }, \
-	// { MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \ // moves focus to master
+	{ MOD,	XK_j,	ACTION##stack,  {.i = INC(-1) } }, \
+	{ ControlMask,  XK_space,       ACTION##stack,  {.i = 0 } }, \
 	/* { MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \ */
 	/* { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \ */
 	/* { MOD, XK_z,     ACTION##stack, {.i = 2 } }, \ */
@@ -191,7 +191,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_apostrophe,	togglescratch,	        {.ui = 1} },
 	{ MODKEY|ShiftMask,	XK_Return,	    togglescratch,	        {.ui = 0} },
 	{ MODKEY,			XK_space,	    zoom,	        	    {0} },
-	{ MODKEY|ShiftMask,	XK_space,	    togglefloating,	        {0} },
+	{ MODKEY|ShiftMask,	XK_f,	        togglefloating,         {0} },
 	{ MODKEY,			XK_b,		    togglebar,	            {0} },
 
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
