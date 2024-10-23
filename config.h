@@ -5,6 +5,7 @@
 #define TERMCLASS "St"
 #define BROWSER "firefox"
 #define EDITOR "nvim"
+#define EXPLORER "lfub"
 
 /* appearance */
 static unsigned int borderpx  = 5;        /* border pixel of windows */
@@ -173,23 +174,24 @@ static const Key keys[] = {
 	{ MODKEY,			XK_semicolon,	shiftview,	{ .i = 1 } },
 	{ MODKEY|ShiftMask,	XK_semicolon,	shifttag,	{ .i = 1 } },
 
-	{ MODKEY,			XK_Tab,		    view,		        {0} },
-	{ MODKEY,			XK_s,	   	    togglesticky,	    {0} },
-	{ MODKEY,			XK_f,	        togglefullscr,      {0} },
-	{ MODKEY,			XK_h,	        setmfact,           {.f = -0.05} },
-	{ MODKEY,			XK_l,		    setmfact,      	    {.f = +0.05} },
-	{ MODKEY,			XK_o,		    incnmaster,         {.i = +1 } },
-	{ MODKEY|ShiftMask,	XK_o,		    incnmaster,         {.i = -1 } },
-	{ MODKEY,		    XK_d,	        settagpath,	        {0} },
-	{ MODKEY|ShiftMask, XK_d,	        settagpathtocwd,    {0} },
-	{ MODKEY,			XK_q,		    killclient,	        {0} },
-	{ MODKEY,          	XK_Return,	    spawntermwithdir,	{0} },
-	{ MODKEY,           XK_n,		    spawneditorwithdir,	{0} },
-	{ MODKEY,			XK_apostrophe,	togglescratch,	    {.ui = 1} },
-	{ MODKEY|ShiftMask,	XK_Return,	    togglescratch,	    {.ui = 0} },
-	{ MODKEY,			XK_space,	    zoom,	        	{0} },
-	{ MODKEY|ShiftMask,	XK_space,	    togglefloating,	    {0} },
-	{ MODKEY,			XK_b,		    togglebar,	        {0} },
+	{ MODKEY,			XK_Tab,		    view,		            {0} },
+	{ MODKEY,			XK_s,	   	    togglesticky,	        {0} },
+	{ MODKEY,			XK_f,	        togglefullscr,          {0} },
+	{ MODKEY,			XK_h,	        setmfact,               {.f = -0.05} },
+	{ MODKEY,			XK_l,		    setmfact,      	        {.f = +0.05} },
+	{ MODKEY,			XK_o,		    incnmaster,             {.i = +1 } },
+	{ MODKEY|ShiftMask,	XK_o,		    incnmaster,             {.i = -1 } },
+	{ MODKEY,		    XK_d,	        settagpath,	            {0} },
+	{ MODKEY|ShiftMask, XK_d,	        settagpathtocwd,        {0} },
+	{ MODKEY,			XK_q,		    killclient,	            {0} },
+	{ MODKEY,          	XK_Return,	    spawntermwithdir,	    {0} },
+	{ MODKEY,           XK_n,		    spawneditorwithdir,	    {0} },
+	{ MODKEY,			XK_r,		    spawnexplorerwithdir,   {0} },
+	{ MODKEY,			XK_apostrophe,	togglescratch,	        {.ui = 1} },
+	{ MODKEY|ShiftMask,	XK_Return,	    togglescratch,	        {.ui = 0} },
+	{ MODKEY,			XK_space,	    zoom,	        	    {0} },
+	{ MODKEY|ShiftMask,	XK_space,	    togglefloating,	        {0} },
+	{ MODKEY,			XK_b,		    togglebar,	            {0} },
 
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} }, /* tile */
 	{ MODKEY|ShiftMask,	XK_t,		setlayout,	{.v = &layouts[1]} }, /* bstack */
@@ -214,7 +216,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,	    XK_w,		    spawn,		{.v = (const char*[]){ TERMINAL, "-e", "sudo", "nmtui", NULL } } },
 	{ MODKEY,			    XK_e,		    spawn,		SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks; rmdir ~/.abook 2>/dev/null") },
 	{ MODKEY|ShiftMask,	    XK_e,		    spawn,		SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
-	{ MODKEY,			    XK_r,		    spawn,		{.v = (const char*[]){ TERMINAL, "-e", "lfub", NULL } } },
 	{ MODKEY|ShiftMask,     XK_r,		    spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
 	{ Mod1Mask,			    XK_space,	    spawn,      {.v = (const char*[]){ "dmenu_run", NULL } } },
 	{ MODKEY,       	    XK_p,	        spawn,		{.v = (const char*[]){ "passmenu", NULL } } },
