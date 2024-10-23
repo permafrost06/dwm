@@ -99,7 +99,7 @@ static const Layout layouts[] = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD,	XK_k,	ACTION##stack,	{.i = INC(+1) } }, \
 	{ MOD,	XK_j,	ACTION##stack,	{.i = INC(-1) } }, \
-	{ MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \
+	// { MOD,  XK_v,   ACTION##stack,  {.i = 0 } }, \ // moves focus to master
 	/* { MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \ */
 	/* { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \ */
 	/* { MOD, XK_z,     ACTION##stack, {.i = 2 } }, \ */
@@ -216,9 +216,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_r,		    spawn,		{.v = (const char*[]){ TERMINAL, "-e", "htop", NULL } } },
 	{ Mod1Mask,			    XK_space,	    spawn,      {.v = (const char*[]){ "dmenu_run", NULL } } },
 	{ MODKEY,       	    XK_p,	        spawn,		{.v = (const char*[]){ "passmenu", NULL } } },
-	{ MODKEY,             	XK_n,		    spawn,		{.v = (const char*[]){ "vpn_control", "tailscale" } } },
-	{ MODKEY|ControlMask,	XK_n,		    spawn,		{.v = (const char*[]){ "vpn_control", "warp" } } },
-	{ MODKEY|ShiftMask, 	XK_n,		    spawn,		{.v = (const char*[]){ "vpn_control", "off" } } },
+	{ MODKEY,             	XK_v,		    spawn,		{.v = (const char*[]){ "vpn_control", "toggle" } } },
+	{ MODKEY|ShiftMask, 	XK_v,		    spawn,		{.v = (const char*[]){ "vpn_control", "switch" } } },
 
 	{ 0,			   	    XK_Print,       spawn,	SHCMD("maim -q -d 0.2 | xclip -sel clip -t image/png") },
 	{ Mod1Mask,		   	    XK_Print,	    spawn,	SHCMD("maim -q -d 0.2 -i \"$(xdotool getactivewindow)\" | xclip -sel clip -t image/png") },
