@@ -201,7 +201,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,	XK_u,		setlayout,	{.v = &layouts[5]} }, /* monocle */
 	{ MODKEY,			XK_i,		setlayout,	{.v = &layouts[6]} }, /* centeredmaster */
 	{ MODKEY|ShiftMask,	XK_i,		setlayout,	{.v = &layouts[7]} }, /* centeredfloatingmaster */
-	{ MODKEY|ShiftMask,	XK_f,	    setlayout,	{.v = &layouts[8]} }, /* floating/normie mode */
 
 	{ MODKEY,			XK_a,	   	    togglegaps,	        {0} },
 	{ MODKEY|ShiftMask,	XK_a,	   	    defaultgaps,	    {0} },
