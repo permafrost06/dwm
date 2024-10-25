@@ -955,7 +955,7 @@ drawbar(Monitor *m)
 	w = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
-    if (strlen(tagPaths[current_tag]) != 0) {
+    if (strlen(tagPaths[current_tag]) > 1) {
         x = drw_text(drw, x, 0, TEXTW(tagPaths[current_tag]), bh, 0, tagPaths[current_tag], 0);
     }
 
