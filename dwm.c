@@ -261,9 +261,7 @@ static void togglefloating(const Arg *arg);
 static void togglescratch(const Arg *arg);
 static void togglesticky(const Arg *arg);
 static void togglefullscr(const Arg *arg);
-static void spawntermwithdir();
-static void spawneditorwithdir();
-static void spawnexplorerwithdir();
+static void spawnwithdir();
 static void settagpath();
 static void cleartagpath();
 static void settagpathtocwd();
@@ -2103,60 +2101,36 @@ togglescratch(const Arg *arg)
 }
 
 void
-spawntermwithdir()
+spawnwithdir(const Arg *arg)
 {
-    int currentTag;
-    for (currentTag = 0; currentTag < LENGTH(tags); currentTag++) {
-        if (selmon->tagset[selmon->seltags] & (1 << currentTag)) {
-            break;
-        }
-    }
+	int currentTag;
+	for (currentTag = 0; currentTag < LENGTH(tags); currentTag++) {
+		if (selmon->tagset[selmon->seltags] & (1 << currentTag)) {
+			break;
+		}
+	}
 
-    char buf[256];
-    snprintf(buf, sizeof(buf), "cd %s && exec $SHELL", tagPaths[currentTag]);
+	char cmd[256] = "";
+	for (const char **v = (const char **)arg->v; *v; v++) {
+		strlcat(cmd, *v, sizeof(cmd));  // Append each part of the command
+		strlcat(cmd, " ", sizeof(cmd)); // Add a space between parts
+	}
 
-    const char *termTmpCmd[]  = { "st", "-e", "sh", "-c", buf, NULL };
+	int len = snprintf(NULL, 0, "cd %s && %s", tagPaths[currentTag], cmd) + 1;
+	char *fullcmd = malloc(len);
+	if (!fullcmd) {
+		die("Failed to allocate memory for fullcmd");
+		return;
+	}
 
-	Arg sparg = {.v = termTmpCmd};
-    spawn(&sparg);
-}
+	snprintf(fullcmd, len, "cd %s && %s", tagPaths[currentTag], cmd);
 
-void
-spawneditorwithdir()
-{
-    int currentTag;
-    for (currentTag = 0; currentTag < LENGTH(tags); currentTag++) {
-        if (selmon->tagset[selmon->seltags] & (1 << currentTag)) {
-            break;
-        }
-    }
+	const char *spawncmd[] = { "st", "-e", "sh", "-c", fullcmd, NULL };
+	Arg newarg = { .v = spawncmd };
 
-    char buf[256];
-    snprintf(buf, sizeof(buf), "cd %s && %s .", tagPaths[currentTag], EDITOR);
+	spawn(&newarg);
 
-    const char *termTmpCmd[]  = { "st", "-e", "sh", "-c", buf, NULL };
-
-	Arg sparg = {.v = termTmpCmd};
-    spawn(&sparg);
-}
-
-void
-spawnexplorerwithdir()
-{
-    int currentTag;
-    for (currentTag = 0; currentTag < LENGTH(tags); currentTag++) {
-        if (selmon->tagset[selmon->seltags] & (1 << currentTag)) {
-            break;
-        }
-    }
-
-    char buf[256];
-    snprintf(buf, sizeof(buf), "cd %s && %s", tagPaths[currentTag], EXPLORER);
-
-    const char *termTmpCmd[]  = { "st", "-e", "sh", "-c", buf, NULL };
-
-	Arg sparg = {.v = termTmpCmd};
-    spawn(&sparg);
+	free(fullcmd);
 }
 
 void
