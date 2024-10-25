@@ -265,6 +265,7 @@ static void spawntermwithdir();
 static void spawneditorwithdir();
 static void spawnexplorerwithdir();
 static void settagpath();
+static void cleartagpath();
 static void settagpathtocwd();
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
@@ -2207,6 +2208,14 @@ settagpathtocwd() {
 	for(i = 0; i < LENGTH(tags); i++)
 		if(selmon->tagset[selmon->seltags] & (1 << i))
 			strcpy(tagPaths[i], name);
+	drawbars();
+}
+
+void
+cleartagpath() {
+	for(int i = 0; i < LENGTH(tags); i++)
+		if(selmon->tagset[selmon->seltags] & (1 << i))
+			strcpy(tagPaths[i], "");
 	drawbars();
 }
 
