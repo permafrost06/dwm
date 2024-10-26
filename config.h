@@ -223,6 +223,10 @@ static const Key keys[] = {
 	{ MODKEY,             	XK_v,		    spawn,		{.v = (const char*[]){ "vpncontrol", "toggle" } } },
 	{ MODKEY|ShiftMask, 	XK_v,		    spawn,		{.v = (const char*[]){ "vpncontrol", "switch" } } },
 
+	{ MODKEY|ShiftMask|ControlMask|Mod1Mask,    XK_s,   spawn,  {.v = (const char*[]){ "sysact", "sleep", NULL } } },
+	{ MODKEY|ShiftMask|ControlMask|Mod1Mask,    XK_h,   spawn,  {.v = (const char*[]){ "sysact", "shutdown", NULL } } },
+	{ MODKEY|ShiftMask|ControlMask|Mod1Mask,    XK_r,   spawn,  {.v = (const char*[]){ "sysact", "reboot", NULL } } },
+
 	{ 0,			   	    XK_Print,       spawn,	SHCMD("maim -q -d 0.2 | xclip -sel clip -t image/png") },
 	{ Mod1Mask,		   	    XK_Print,	    spawn,	SHCMD("maim -q -d 0.2 -i \"$(xdotool getactivewindow)\" | xclip -sel clip -t image/png") },
 	{ ShiftMask,	        XK_Print,	    spawn,	SHCMD("maim -u -s | xclip -sel clip -t image/png") },
