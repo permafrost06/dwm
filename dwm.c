@@ -241,6 +241,7 @@ static void setclienttagprop(Client *c);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
 static void setlayout(const Arg *arg);
+static void selectlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
@@ -1826,6 +1827,26 @@ setlayout(const Arg *arg)
 		arrange(selmon);
 	else
 		drawbar(selmon);
+}
+
+void
+selectlayout()
+{
+    int layoutidx;
+	FILE *f;
+	int i;
+
+	errno = 0;
+	if (!(f = popen("selectlayout", "r"))) {
+		fprintf(stderr, "dwm: popen 'selectlayout' failed%s%s\n", errno ? ": " : "", errno ? strerror(errno) : "");
+	}
+	if (fscanf(f, "%d", &layoutidx) != 1 && (i = errno) && ferror(f))
+		fprintf(stderr, "dwm: fscanf failed: %s\n", strerror(i));
+	if (pclose(f) < 0)
+		fprintf(stderr, "dwm: pclose failed: %s\n", strerror(errno));
+
+	Arg arg = { .v = &layouts[layoutidx] };
+	setlayout(&arg);
 }
 
 /* arg > 1.0 will set mfact absolutely */
