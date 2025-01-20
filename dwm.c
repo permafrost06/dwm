@@ -1845,6 +1845,10 @@ selectlayout()
 	if (pclose(f) < 0)
 		fprintf(stderr, "dwm: pclose failed: %s\n", strerror(errno));
 
+    if (layoutidx < 0 || layoutidx > sizeof(layouts)/sizeof(layouts[0])) {
+        return;
+    }
+
 	Arg arg = { .v = &layouts[layoutidx] };
 	setlayout(&arg);
 }
